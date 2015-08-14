@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <link href="/static/bootstrap/css/bootstrap.css" rel="stylesheet">
+    </head>
+    <body>
+        <h1 style="margin: 30px">Django Vanilla Views</h1>
+        <div style="margin: 30px">
+            {% if author_list %}
+            <table class="table table-striped">
+                <tr><th>Message</th><th>Completed</th><th></th><th></th></tr>
+                {% for autor in author_list %}
+                    <tr>
+                        <td>{{ autor.name }}</td>
+                        <td>{{ autor.title }}</td>
+                        <td><a href="{% url 'edit_note' autor.pk %}">edit</a></td>
+                        <td>
+                            <form method="POST" action="{% url 'delete_note' autor.pk %}">
+                                {% csrf_token %}
+                                <input type="submit" class="btn btn-sm btn-danger" value="delete">
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+            {% endif %}
+            <p><a href="{% url 'create_note' %}">Create a new note</a></p>
+        </div>
+    </body>
+</html>
